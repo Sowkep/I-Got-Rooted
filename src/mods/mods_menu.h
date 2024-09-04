@@ -1,22 +1,25 @@
 #ifndef MODS_MENU_H
 #define MODS_MENU_H
 
-#define DEFAULT_MODS_FOLDER "default/"
-#define DEFAULT_USERS_FOLDER "users/"
+#define DEFAULT_MODS_FOLDER "src/mods/default/"
+#define DEFAULT_USERS_FOLDER "src/mods/users/"
 
 #include <stdio.h>
 #include <dirent.h>
 
-int mods_menu(){
+inline int mods_menu(){
     DIR *directory;
-    directory = opendir(".");
+    directory = opendir(DEFAULT_MODS_FOLDER);
+    struct dirent *entry;
     if(directory == NULL){
         puts("unable to open directory");
         return 1;
     }
     else{
-        puts("opened");
-        printf("%s\n", readdir(directory)->d_name);
+        while( (entry = readdir(directory)) ){
+            printf("File: %s\n", entry->d_name);
+            //neeed to include entry->d_name        
+        }
     }
     closedir(directory);
     return 0;

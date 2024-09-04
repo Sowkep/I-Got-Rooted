@@ -8,7 +8,7 @@
 static const char* options[] = {"mods", "setting up", "exit"};
 static int user_input;
 
-void menu(){
+inline void menu(){
     printf("Select an option:\n");
     for(int i = 0; i < sizeof(options) / sizeof(options[0]); i++){
         printf("%d)%s\n", i, options[i]);

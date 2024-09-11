@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-inline void print(){
+static void OSINT(){
     printf("lol\n");
 }
 

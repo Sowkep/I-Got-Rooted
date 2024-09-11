@@ -17,11 +17,12 @@ int main(){
     if(directory == NULL){
         perror("Unable to open directory");
         exit(1);
-    } else{
-#       include <ftw.h>
-#       include <unistd.h>
-        int rem_val = remove("_tmp");
-    }
+    }//else{
+// #       include <ftw.h>
+// #       include <unistd.h>
+//         int rem_val = remove("_tmp");
+//     }
+    closedir(directory);
 
     return 0;
 }

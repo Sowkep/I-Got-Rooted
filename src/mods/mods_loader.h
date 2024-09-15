@@ -34,37 +34,31 @@ static int mods_loader(){
         includes = fopen(filepath, "a");
 
         if(includes == NULL){
-            perror("Unable to open tmp folder");
+            printf("Unable to open tmp folder\n");
             puts("Making tmp folder");
             mkdir("tmp", S_IRWXU);
             puts("Success");
             mods_loader();
         } else{
             int el=0;
-            char* mods[0];
-            void* err;
+            char** mods = (char**)malloc(0);
 
-            Map* funcs;
+            //Map* funcs;
 
             while( (entry = readdir(directory)) != NULL){
                 if(strcmp(".", entry->d_name) == 0 || strcmp("..", entry->d_name) == 0)
                     continue;
                 fprintf(includes, "#include \"../%s/%s\"\n", DEFAULT_MODS_PATH, entry->d_name);
-                
-                fprintf(includes, "#define KEYS[%d] %s\n", el, entry->d_name);
-                if(err == NULL){
-                    perror("Unable to memory an array");
-                    exit(1);
-                }
 
-                printf("%zu\n", strlen(entry->d_name));
+                mods = (char**)realloc(mods, sizeof(mods)+(el+1)*strlen(entry->d_name));
+                mods[el] = entry->d_name;
+                
+                printf("%d)%s\n", el, mods[el]);
+
                 ++el;
             }
             fclose(includes);
-            
-            for(int i = 0; i < sizeof(mods)/sizeof(mods[0]); ++i){
-                free(mods[i]);
-            }
+            free(mods);
         }
     }
     closedir(directory);
